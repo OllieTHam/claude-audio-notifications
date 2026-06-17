@@ -7,6 +7,7 @@ PowerShell hooks for Claude Code that play audio cues when Claude finishes a res
 - Plays a short beep when Claude stops responding (`Stop` hook → `claude-stop.ps1`)
 - Starts a background timer that plays three slower beeps after 180 seconds if you haven't typed anything
 - Cancels the reminder timer as soon as you submit a new prompt (`UserPromptSubmit` hook → `claude-input.ps1`)
+- Cancels the reminder timer when you exit Claude Code gracefully (`SessionEnd` hook → `claude-input.ps1`)
 
 ## Prerequisites
 
@@ -42,6 +43,16 @@ Open `%USERPROFILE%\.claude\settings.json` (create it if it doesn't exist) and a
       }
     ],
     "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe -ExecutionPolicy Bypass -File \"C:\\YOUR\\PATH\\claude-audio-notifications\\hooks\\claude-input.ps1\""
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
       {
         "hooks": [
           {
